@@ -4,5 +4,6 @@ using namespace Dispatcher;
 
 int main() {
 	ThreadDispatcher dispatcher;
-	dispatcher.AddTask([](int a) {return 0; }, 0);
+	auto t = dispatcher.AddTask([](int a) {return ; }, 1);
+
 }
