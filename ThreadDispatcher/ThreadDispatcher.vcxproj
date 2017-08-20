@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DoNotExcept.h" />
+    <ClInclude Include="MoveableFunction.h" />
     <ClInclude Include="ThreadDispatcher.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

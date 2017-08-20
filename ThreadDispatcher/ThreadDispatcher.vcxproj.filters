@@ -29,5 +29,8 @@
     <ClInclude Include="DoNotExcept.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MoveableFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
