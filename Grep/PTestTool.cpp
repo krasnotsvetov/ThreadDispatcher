@@ -10,7 +10,7 @@ int PTestTool::Test(const std::experimental::filesystem::directory_entry&  entry
 		std::string line;
 		int lineNumber = 1;
 		while (std::getline(ifs, line)) {
-			char connector = (char)1;
+			char connector = static_cast<char>(1);
 			std::string toTest = word + connector + line;
 			if (pFunctionTest(toTest, word, ignoreCaseSensitivity)) {
 				return lineNumber;

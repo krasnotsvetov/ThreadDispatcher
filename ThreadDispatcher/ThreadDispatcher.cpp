@@ -3,13 +3,13 @@
 #include <vector>
 
 namespace Dispatcher {
-	ThreadDispatcher::ThreadDispatcher(int threadCount)
+	ThreadDispatcher::ThreadDispatcher(int threadCount) : isRunning(true)
 	{
 		for (int i = 0; i < threadCount; i++) {
 			threads.push_back(std::thread(
 				[this]() 
 				{
-					while (this->isRunning)
+					while (this->isRunning || tasks.size() > 0)
 					{
 						std::unique_lock<std::mutex> lock(this->mutex);
 						this->taskAvailableNotifier.wait(lock,

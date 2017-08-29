@@ -28,7 +28,7 @@ namespace Dispatcher
 		{
 			std::promise<retType> promise;
 			auto future = promise.get_future();
-			tasks.emplace([func = std::move(func), args..., promise = std::move(promise)]()  mutable {
+			tasks.emplace([func = std::move(func), args..., promise = std::move(promise)]() mutable {
 				
 				DoNotExcept(
 					[&]()
