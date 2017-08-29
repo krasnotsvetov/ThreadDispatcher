@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ThreadDispatcher.cpp">
+    <ClCompile Include="Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Program.cpp">
+    <ClCompile Include="Grep.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PTestTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ThreadDispatcher.h">
+    <ClInclude Include="Grep.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DoNotExcept.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveableFunction.h">
+    <ClInclude Include="PTestTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

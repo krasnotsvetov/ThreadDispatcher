@@ -20,6 +20,13 @@ namespace Dispatcher {
 				return myInvoker->Invoke(args...);
 			}
 
+			template <typename Function>
+			MoveableFunction(MoveableFunction<Function>&& other) :
+				myInvoker(std::move(other.myInvoker))
+			{
+				
+			}
+
 		private:
 			class InvokerBase {
 			public:

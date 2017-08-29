@@ -13,6 +13,7 @@
 #include <queue>
 
 #include "DoNotExcept.h"
+#include "MoveableFunction.h"
 
 namespace Dispatcher 
 {
@@ -21,56 +22,51 @@ namespace Dispatcher
 	public:
 		ThreadDispatcher(int threadCount);
 		
-
 		template <typename T, typename... Args,
 			typename retType = decltype(std::declval<T>()(std::declval<Args>()...))>
 		std::future<retType> AddTask(T func, Args&&... args)
 		{
-			auto promise = std::make_shared<std::promise<retType>>();
-
-			tasks.emplace([func = std::move(func), args..., promise]() {
-
+			std::promise<retType> promise;
+			auto future = promise.get_future();
+			tasks.emplace([func = std::move(func), args..., promise = std::move(promise)]()  mutable {
+				
 				DoNotExcept(
-					[func = std::move(func), args..., promise]()
+					[&]()
 				{
-					PutToPromiseOrIgnore(std::move(func), promise, std::move(args)...);
+					SetPromiseValue(func, promise, std::move(args)...);
 				},
-					[promise](const std::exception_ptr& exception_ptr)
+					[&promise](const std::exception_ptr& exception_ptr)
 				{
-					promise->set_exception(exception_ptr);
+					promise.set_exception(exception_ptr);
 				}
 				);
-
 			});
 
 			{
 				std::unique_lock<std::mutex> lock(this->mutex);
 				taskAvailableNotifier.notify_one();
 			}
-
-
-			return promise->get_future();
+			return future;
 		}
 
 		~ThreadDispatcher();
 
 	private:
-		
 		template<typename T, typename... Args,
 			typename retType = decltype(std::declval<T>()(std::declval<Args>()...))>
-		static void PutToPromiseOrIgnore(T func, std::shared_ptr<std::promise<retType>> promise, Args&&... args) {
+		static void SetPromiseValue(T& func, std::promise<retType>& promise, Args&&... args) {
 			
-			promise->set_value(func(std::move(args)...));
+			promise.set_value(func(std::move(args)...));
 		}
 
 		template<typename T, typename... Args>
-		static void PutToPromiseOrIgnore(T func, std::shared_ptr<std::promise<void>> promise, Args&&... args) {
+		static void SetPromiseValue(T& func, std::promise<void>& promise, Args&&... args) {
 
 			func(std::move(args)...);
-			promise->set_value();
+			promise.set_value();
 		}
 
-		std::queue<std::function<void()>> tasks;
+		std::queue<Utils::MoveableFunction<void()>> tasks;
 		std::vector<std::thread> threads;
 		std::atomic<bool> isRunning;
 		std::condition_variable taskAvailableNotifier;

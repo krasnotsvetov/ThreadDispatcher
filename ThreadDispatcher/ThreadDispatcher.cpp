@@ -11,7 +11,6 @@ namespace Dispatcher {
 				{
 					while (this->isRunning)
 					{
-
 						std::unique_lock<std::mutex> lock(this->mutex);
 						this->taskAvailableNotifier.wait(lock,
 							[this]()
@@ -22,7 +21,7 @@ namespace Dispatcher {
 
 						if (!this->isRunning) return;
 
-						auto task = this->tasks.front();
+						auto task = std::move(this->tasks.front());
 						this->tasks.pop();
 
 						task();
