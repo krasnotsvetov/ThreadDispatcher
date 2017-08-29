@@ -10,6 +10,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <mutex>
+#include <memory>
 #include <queue>
 
 #include "DoNotExcept.h"
@@ -26,6 +27,9 @@ namespace Dispatcher
 			typename retType = decltype(std::declval<T>()(std::declval<Args>()...))>
 		std::future<retType> AddTask(T func, Args&&... args)
 		{
+			std::unique_lock<std::mutex> lock(this->mutex);
+			if (!isRunning) return std::future<void>();
+
 			std::promise<retType> promise;
 			auto future = promise.get_future();
 			tasks.emplace([func = std::move(func), args..., promise = std::move(promise)]() mutable {
@@ -42,10 +46,7 @@ namespace Dispatcher
 				);
 			});
 
-			{
-				std::unique_lock<std::mutex> lock(this->mutex);
-				taskAvailableNotifier.notify_one();
-			}
+			taskAvailableNotifier.notify_one();
 			return future;
 		}
 
@@ -71,6 +72,7 @@ namespace Dispatcher
 		std::atomic<bool> isRunning;
 		std::condition_variable taskAvailableNotifier;
 		std::mutex mutex;
+		std::mutex taskAddMutex;
 	};
 }
 

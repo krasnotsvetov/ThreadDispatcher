@@ -4,6 +4,7 @@
 #pragma once
 #include <string>
 #include <future>
+#include <list>
 #include <experimental/filesystem>
 #include "../ThreadDispatcher/ThreadDispatcher.h"
 
@@ -18,9 +19,9 @@ namespace GrepTool {
 			bool ignoreCaseSensitivity, int threadCount);
 	
 	private:
-		static void VisitDirectories(filesystem::path rootPath, std::string& word, bool ignoreCaseSensitivity, 
+		static std::list<std::future<void>> VisitDirectories(filesystem::path rootPath, std::string& word, bool ignoreCaseSensitivity, 
 			ThreadDispatcher& dispatcher, std::vector<std::string>& result, std::shared_ptr<std::mutex> lockObj);
-		static void InspectFile(const std::experimental::filesystem::directory_entry& de, std::string& word, 
+		static std::future<void> InspectFile(const std::experimental::filesystem::directory_entry& de, std::string& word, 
 			bool ignoreCaseSensitivity, ThreadDispatcher& dispatcher, std::vector<std::string>& result, std::shared_ptr<std::mutex> lockObj);
 	};
 }

@@ -9,13 +9,14 @@ namespace Dispatcher {
 			threads.push_back(std::thread(
 				[this]() 
 				{
-					while (this->isRunning || tasks.size() > 0)
+					while (this->isRunning)
 					{
 						std::unique_lock<std::mutex> lock(this->mutex);
+
 						this->taskAvailableNotifier.wait(lock,
 							[this]()
 							{
-								return !(this->isRunning && this->tasks.empty());
+								return !(this->isRunning && tasks.empty());
 							}
 						);
 

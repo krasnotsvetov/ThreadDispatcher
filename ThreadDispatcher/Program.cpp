@@ -15,7 +15,7 @@ void print_int (std::future<int>& fut) {
   std::cout << "value: " << x << '\n';
 }
 int main() {
-	ThreadDispatcher dispatcher(5);
+	/*ThreadDispatcher dispatcher(5);
 	auto t = dispatcher.AddTask([](int a) {return  ++a; }, 1);
 
 	auto result = t.get();
@@ -28,5 +28,5 @@ int main() {
 	Dispatcher::Utils::MoveableFunction<int(int)> zzz([p = std::move(promise)](int x) {return ++x;});
 	std::vector<Dispatcher::Utils::MoveableFunction<int(int)>> vec;
 	vec.push_back([p = std::move(promise)](int x) {return ++x;});
-	int t2 = vec[0](x);
+	int t2 = vec[0](x);*/
 }
