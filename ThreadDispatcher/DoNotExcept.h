@@ -1,6 +1,6 @@
 #pragma once
-#ifndef H_DONOTEXCEPT
-#define H_DONOTEXCEPT
+#ifndef DONOTEXCEPT
+#define DONOTEXCEPT
 #include <functional>
 #include <exception>
 

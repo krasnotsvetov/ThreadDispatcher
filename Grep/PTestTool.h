@@ -1,4 +1,7 @@
 #pragma once
+#ifndef PTEST_TOOL
+#define PTEST_TOOL
+
 #include <experimental/filesystem>
 #include <fstream>
 #include <string>
@@ -15,3 +18,4 @@ namespace GrepTool {
 		static char transformChar(char const c, bool const caseSensitivity);
 	};
 }
+#endif

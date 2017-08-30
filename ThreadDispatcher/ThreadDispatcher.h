@@ -1,6 +1,6 @@
 #pragma once
-#ifndef H_THREADDISPATCHER
-#define H_THREADDISPATCHER
+#ifndef THREADDISPATCHER
+#define THREADDISPATCHER
 
 #include <utility>
 #include <vector>
@@ -76,4 +76,4 @@ namespace Dispatcher
 	};
 }
 
-#endif // !H_THREADDISPATCHER
+#endif

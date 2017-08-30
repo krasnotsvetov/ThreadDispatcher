@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Program.cpp" />
     <ClCompile Include="ThreadDispatcher.cpp" />
   </ItemGroup>
   <ItemGroup>

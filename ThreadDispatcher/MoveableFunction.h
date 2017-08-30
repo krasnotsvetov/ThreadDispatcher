@@ -38,7 +38,9 @@ namespace Dispatcher {
 			template<typename Function>
 			class Invoker : public InvokerBase {
 			public:
-				Invoker(Function&& func) : InvokerBase(), function(std::move(func)) {}				virtual ReturnType Invoke(ArgumentTypes... args)				{
+				Invoker(Function&& func) : InvokerBase(), function(std::move(func)) {}
+				virtual ReturnType Invoke(ArgumentTypes... args)
+				{
 					return function(args ...);
 				}
 			private:
@@ -47,6 +49,6 @@ namespace Dispatcher {
 
 			std::unique_ptr<InvokerBase> myInvoker;
 		};
-#endif // !MOVEABLE_FUNCTION
 	}
 }
+#endif // !MOVEABLE_FUNCTION

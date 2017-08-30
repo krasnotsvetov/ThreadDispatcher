@@ -19,11 +19,11 @@ int main(int argc, char* argv[])
 	{
 		ignoreCaseSensitivity = std::string(argv[3]).compare("-i") == 0;
 	}
-	
-	for (int i = 0; i < 100; i++)
+	auto result = Grep::Execute(path, word, ignoreCaseSensitivity, 1);
+	auto t = result.get();
+	for (auto& file : t)
 	{
-		auto result = Grep::Execute(path, word, ignoreCaseSensitivity, 1);
-		auto t = result.get();
+		std::cout << file << std::endl;
 	}
 	return 0;
 }

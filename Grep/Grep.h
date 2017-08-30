@@ -1,5 +1,5 @@
-#ifndef H_GREP
-#define H_GREP
+#ifndef GREP
+#define GREP
 
 #pragma once
 #include <string>
