@@ -28,8 +28,8 @@ namespace Dispatcher
 		std::future<retType> AddTask(T func, Args&&... args)
 		{
 			std::unique_lock<std::mutex> lock(this->mutex);
-			if (!isRunning) return std::future<void>();
-
+			if (!isRunning) throw std::exception("The thread dispatcher has been destroyed");
+			
 			std::promise<retType> promise;
 			auto future = promise.get_future();
 			tasks.emplace([func = std::move(func), args..., promise = std::move(promise)]() mutable {

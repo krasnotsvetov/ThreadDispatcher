@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Grep.h"
-using namespace::GrepTool;
+using namespace::Grep;
 
 int main(int argc, char* argv[])
 {
